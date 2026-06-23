@@ -1,0 +1,254 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@keyframes gm-hero-progress {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* ============================================================
+   GoldenMovies — Design Tokens (Phase 0)
+   Theme: black/graphite + metallic gold (premium)
+   Compatible with shadcn/ui (HSL-less variables, oklch/hex format)
+   Dark only — the demo is dark-first / desktop-first
+   ============================================================ */
+
+:root {
+  /* Dark-only theme; let the browser style native controls accordingly. */
+  color-scheme: dark;
+
+  /* shadcn expects these always present; mirror the dark theme values here */
+  --radius: 0.75rem;
+
+  --background: #0d0d10;
+  --foreground: #f4f1ea;
+
+  --card: #141418;
+  --card-foreground: #f4f1ea;
+
+  --popover: #16161b;
+  --popover-foreground: #f4f1ea;
+
+  /* Gold as the primary brand color */
+  --primary: #d4af37;
+  --primary-foreground: #1a1405;
+
+  --secondary: #1b1b21;
+  --secondary-foreground: #f4f1ea;
+
+  --muted: #1b1b21;
+  --muted-foreground: #a8a69d;
+
+  --accent: #212128;
+  --accent-foreground: #f5e6b8;
+
+  --destructive: #c0392b;
+  --destructive-foreground: #f4f1ea;
+
+  --border: #26262e;
+  --input: #26262e;
+  --ring: #d4af37;
+
+  /* ── GoldenMovies custom design tokens (use via bg-gm-* etc.) ── */
+  --gm-bg-0: #08080a;
+  --gm-bg-1: #0d0d10;
+  --gm-bg-2: #141418;
+  --gm-bg-3: #1b1b21;
+  --gm-bg-hover: #212128;
+  --gm-line: #26262e;
+  --gm-line-soft: #1c1c22;
+
+  --gm-tx-1: #f4f1ea;
+  --gm-tx-2: #a8a69d;
+  --gm-tx-3: #6e6c66;
+
+  --gm-gold-1: #f5e6b8;
+  --gm-gold-2: #e3c878;
+  --gm-gold: #d4af37;
+  --gm-gold-deep: #b8902a;
+  --gm-gold-faint: rgba(212, 175, 55, 0.10);
+  --gm-gold-line: rgba(212, 175, 55, 0.28);
+
+  --gm-grad-gold: linear-gradient(135deg, #f5e6b8 0%, #d4af37 45%, #b8902a 100%);
+
+  /* Ink color used on gold backgrounds (button text, play icon fill) */
+  --gm-gold-ink: #1a1405;
+
+  --header-h: 68px;
+  --side-w: 248px;
+  --side-w-collapsed: 76px;
+
+  /* Semantic z-index scale — use the @utility classes (z-overlay,
+     z-sticky, …) below, not raw numbers. */
+  --z-overlay:    2;   /* inside-element layering (over images/veils) */
+  --z-overlay-hi: 3;   /* one notch up (carousel controls over content) */
+  --z-sticky:    30;   /* sticky header */
+  --z-sidebar:   40;   /* fixed sidebar */
+  --z-modal:     50;   /* dialogs, dropdown popovers */
+  --z-toast:     60;   /* future toast layer */
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  /* GoldenMovies palette exposed as Tailwind color utilities */
+  --color-gm-bg-0: var(--gm-bg-0);
+  --color-gm-bg-1: var(--gm-bg-1);
+  --color-gm-bg-2: var(--gm-bg-2);
+  --color-gm-bg-3: var(--gm-bg-3);
+  --color-gm-line: var(--gm-line);
+  --color-gm-gold: var(--gm-gold);
+  --color-gm-gold-1: var(--gm-gold-1);
+  --color-gm-tx-1: var(--gm-tx-1);
+  --color-gm-tx-2: var(--gm-tx-2);
+  --color-gm-tx-3: var(--gm-tx-3);
+  --color-gm-gold-ink: var(--gm-gold-ink);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --font-sans: var(--font-manrope), system-ui, sans-serif;
+  --font-display: var(--font-cormorant), Georgia, serif;
+
+  /* Brand shadows — used on gold CTAs and the hero play circle */
+  --shadow-brand:    0 6px 22px rgba(212, 175, 55, .22);
+  --shadow-brand-hi: 0 10px 30px rgba(212, 175, 55, .32);
+  --shadow-brand-xl: 0 8px 28px rgba(212, 175, 55, .40);
+
+  /* Eyebrow / label letter-spacing scale */
+  --tracking-eyebrow-sm: 0.06em;
+  --tracking-eyebrow:    0.08em;
+  --tracking-eyebrow-md: 0.12em;
+  --tracking-eyebrow-lg: 0.16em;
+  --tracking-eyebrow-xl: 0.18em;
+
+  /* Display heading scale — paired with line-height & letter-spacing */
+  --text-display-sm: 3.25rem;            /* 52px */
+  --text-display-sm--line-height: 0.98;
+  --text-display-sm--letter-spacing: -0.01em;
+
+  --text-display-md: 3.75rem;            /* 60px */
+  --text-display-md--line-height: 0.98;
+  --text-display-md--letter-spacing: -0.01em;
+
+  --text-display-lg: 4.25rem;            /* 68px */
+  --text-display-lg--line-height: 0.98;
+  --text-display-lg--letter-spacing: -0.01em;
+}
+
+/* ── Composed utilities ─────────────────────────────────────── */
+
+/* Gold-gradient text/background — exposed as Tailwind utilities so
+   variants (hover:, focus:) and @apply work. */
+@utility bg-gold-gradient {
+  background: var(--gm-grad-gold);
+}
+@utility text-gold-gradient {
+  background: var(--gm-grad-gold);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Gold CTA button — collects the chrome (gradient, ink color, brand
+   shadow, hover lift). Layout (size/padding/gap) is left to the call
+   site so it can vary (h-12 vs h-11, w-full vs px-7, etc.). */
+@utility btn-gold {
+  @apply rounded-full bg-gold-gradient text-gm-gold-ink font-semibold transition-transform;
+  box-shadow: var(--shadow-brand);
+
+  &:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-brand-hi);
+  }
+  &:disabled {
+    transform: none;
+    opacity: .7;
+  }
+}
+
+/* Bottom fade veil for posters/cards — content darkens to bg-0 */
+@utility veil-b {
+  background: linear-gradient(180deg, transparent 55%, rgba(8, 8, 10, .85));
+}
+@utility veil-b-soft {
+  background: linear-gradient(180deg, transparent 55%, rgba(8, 8, 10, .55));
+}
+@utility veil-b-tall {
+  background: linear-gradient(180deg, transparent 40%, rgba(8, 8, 10, .85));
+}
+
+/* Left-to-right darken for the hero so the copy stays readable */
+@utility veil-l {
+  background: linear-gradient(90deg, rgba(8, 8, 10, .85) 0%, rgba(8, 8, 10, .45) 45%, transparent 75%);
+}
+
+/* Multi-layer hero vignette (purple/amber radials + diagonal wash) */
+@utility hero-vignette {
+  background:
+    radial-gradient(120% 90% at 78% 30%, rgba(60, 40, 70, .25), transparent 60%),
+    radial-gradient(90% 120% at 10% 80%, rgba(40, 30, 15, .3), transparent 55%),
+    linear-gradient(115deg, rgba(21, 19, 26, .55) 0%, rgba(12, 11, 15, .4) 55%, rgba(16, 13, 8, .3) 100%);
+}
+
+/* Semantic z-index utilities */
+@utility z-overlay    { z-index: var(--z-overlay); }
+@utility z-overlay-hi { z-index: var(--z-overlay-hi); }
+@utility z-sticky     { z-index: var(--z-sticky); }
+@utility z-sidebar    { z-index: var(--z-sidebar); }
+@utility z-modal      { z-index: var(--z-modal); }
+@utility z-toast      { z-index: var(--z-toast); }
+
+/* Club hero background — gold radial + diagonal dark wash */
+@utility club-hero-bg {
+  background:
+    radial-gradient(120% 90% at 78% 30%, rgba(212, 175, 55, .25), transparent 60%),
+    linear-gradient(115deg, #15131a 0%, #0c0b0f 55%, #100d08 100%);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+}
+
+body {
+  background: var(--gm-bg-1);
+  color: var(--gm-tx-1);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--gm-gold-line);
+  color: var(--gm-gold-1);
+}
+
+/* Premium custom scrollbar */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--gm-bg-1); }
+::-webkit-scrollbar-thumb {
+  background: var(--gm-line);
+  border-radius: 6px;
+  border: 2px solid var(--gm-bg-1);
+}
+::-webkit-scrollbar-thumb:hover { background: #33333d; }

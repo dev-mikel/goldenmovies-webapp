@@ -1,0 +1,114 @@
+# dependencies
+node_modules/
+/.pnp
+.pnp.*
+
+# testing
+/coverage
+.claude/
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+/dist
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-workspace
+*.sublime-project
+
+# certs / secrets
+*.pem
+*.key
+*.crt
+
+# debug / logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+
+# env files
+.env
+.env.*
+!.env.example
+
+# typescript
+*.tsbuildinfo
+
+# gitmaster additions
+docs/archive/
+archive/
+.next/
+.turbo/
+dist/
+build/
+out/
+.venv/
+venv/
+env/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+*.egg-info/
+*.db
+*.sqlite
+*.sqlite3
+logs/
+.cache/
+tmp/
+temp/
+.vscode/*
+!.vscode/extensions.json
+.vercel/
+.terraform/
+*.tfstate*
+.cursor/
+.continue/
+secrets/
+
+# === Security audit: sensitive files (added 2026-06-18) ===
+*.p12
+*.pfx
+*.jks
+*.keystore
+*.p8
+*.ppk
+id_rsa*
+id_ed25519*
+id_ecdsa*
+*.keytab
+credentials*.json
+credentials*.yml
+credentials*.yaml
+service-account*.json
+*.pypirc
+.npmrc
+.netrc
+terraform.tfvars
+*.secrets
+secrets.yml
+secrets.yaml
+.vault-password
+sz-*
